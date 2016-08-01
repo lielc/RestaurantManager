@@ -1,0 +1,62 @@
+[
+  {
+    "Name" : "Fried Chicken Sandwich",
+    "Description" : "Served with pickles, lettuce, tomato, American cheese, and hot sauce on challah bread",
+    "Price" : "55",
+    "Type" : "main"
+  },
+  {
+    "Name" : "Margherita Pizza",
+    "Description" : "Tomato sauce, mozzarella, and basil on top of our homemade pizza dough",
+    "Price" : "45",
+    "Type" : "main"
+  },
+  {
+    "Name" : "Farm Beef Burger",
+    "Description" : "250g of house-ground burger topped with caramelized onions and cheddar. Served with french fries",
+    "Price" : "65",
+    "Type" : "main"
+  },
+  {
+    "Name" : "Patatas Bravas",
+    "Description" : "fried potato wedges tossed in a marinade and served with sun-dried tomato aioli.",
+    "Price" : "30",
+    "Type" : "starter"
+  },
+  {
+    "Name" : "Kale and Chicory Salad",
+    "Description" : "Pickled peach, toasted almonds, crumbled blue cheese, white balsamic vinaigrette",
+    "Price" : "40",
+    "Type" : "salad"
+  },
+  {
+    "Name" : "Green Salad",
+    "Description" : "Mixed greens, spinach, cherry tomato, endive, mustard vinaigrette",
+    "Price" : "25",
+    "Type" : "salad"
+  },
+  {
+    "Name" : "Hummus Platter",
+    "Description" : "Fresh traditional hummus, fresh tomatoes, feta cheese and Kalamata olives. Served with warm flatbread",
+    "Price" : "25",
+    "Type" : "starter"
+  },
+  {
+    "Name" : "Fish & Chips",
+    "Description" : "Battered and fried to crispy perfection. Served with tartar sauce, french fries and coleslaw.",
+    "Price" : "55",
+    "Type" : "main"
+  },
+  {
+    "Name" : "Bottled Water",
+    "Description" : "",
+    "Price" : "8",
+    "Type" : "drink"
+  },
+  {
+    "Name" : "Coffee",
+    "Description" : "",
+    "Price" : "13",
+    "Type" : "drink"
+  }
+]
