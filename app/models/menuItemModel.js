@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.scheme;
+var Schema = mongoose.Schema;
 
 var menuItemScheme = new Schema({
     Name: {type: String, required: true},

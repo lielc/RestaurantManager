@@ -9,7 +9,8 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     mongodb = require('mongodb'),
     path = require('path'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    MenuItem = require('./app/models/menuItemModel');
 
 // Config
 var dbUrl = 'mongodb://localhost:27017/RestaurantManagerDB';
@@ -33,11 +34,9 @@ mongoose.connect(dbUrl, function(err, db) {
     if (err) {
         console.log('Unable to connect to the mongoDB server. Error:', err);
     }
-
-    menuItemsCol = db.collection('MenuItems');
-    OrdersCol = db.collection('Orders');
-    console.log("Connected to database!");
-
+    else {
+        console.log("Connected to database!");
+    }
 
     // start app at http://localhost:8080
     app.listen(port);
@@ -49,8 +48,13 @@ exports = module.exports = app;
 
 app.get('/tableScreen/:tableId', function(req, res) {
         var tableId = req.params.tableId;
-        res.render('tableMenuView', {tableId: tableId });
-    })
+        MenuItem.find({},function (err, menuItems){
+            if (err) console.log("error:" + err);
+            else{
+                res.render('tableMenuView', { tableId: tableId, menuItems: menuItems });
+            }
+        })
+    });
 
 /*
 app.get('/api/getMenuItems', function(req, res) {
