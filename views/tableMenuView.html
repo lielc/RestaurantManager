@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title> Table {{ tableId }} </title>
     <style>
@@ -45,19 +45,64 @@
         <div class="col-sm-9">
             <h4>Menu</h4>
             <hr>
-            <form class="form-inline">
-                <section class="form-group">
-                    <label for="exampleInputName2">Name</label>
-                    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-                </section>
-                <button type="submit" class="btn btn-default">Send invitation</button>
-            </form>
+            <div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="bg-success">
+                                <b>Main Course</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Fried Chicken Sandwich </td>
+                            <td> Served with pickles, lettuce, tomato, American cheese, and hot sauce on challah bread </td>
+                            <td> 55 </td>
+                            <td><a class="btn btn-default add-to-cart" href="#" role="button" data-name="Fried Chicken Sandwich" data-price="55">Add to cart</a></td>
+                        </tr>
+                        <tr>
+                            <td> Margherita Pizza </td>
+                            <td>Tomato sauce, mozzarella, and basil on top of our homemade pizza dough</td>
+                            <td>45</td>
+                            <td><a class="btn btn-default add-to-cart" href="#" role="button" data-name="Margherita Pizza" data-price="45">Add to cart</a></td>
+                        </tr>
+                        <tr class="bg-success">
+                            <td colspan="4" scope="row">
+                                <b>Salads</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Green Salad </td>
+                            <td>Mixed greens, spinach, cherry tomato, endive, mustard vinaigrette</td>
+                            <td>25</td>
+                            <td><a class="btn btn-default add-to-cart" href="#" role="button" data-name="Green Salad" data-price="25">Add to cart</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <hr>
         </div>
 
-        <aside class="col-sm-3 sidenav">
-            <h4>Cart</h4>
-            <hr>
+            <aside class="col-sm-3 sidenav">
+                <h4>Cart</h4>
+                <hr>
+    <!--            <ul id="show-cart" class="list-group">
+                    <li  class="list-group-item"> no items in cart... </li>
+                </ul>-->
+                <table class='table' id="quantity-input">
+                    <thead>
+                    <tr>
+                        <td class="col-xs-5">selected dish</td>
+                        <td class="col-xs-1">price</td>
+                        <td class="col-xs-3">quantity</td>
+                        <td class="col-xs-3">total</td>
+                    </tr>
+                    </thead>
+                    <tbody id="show-cart">
+
+                    </tbody>
+                </table>
+                <hr/>
+                <div>Cart Total: <span id="total-cart"></span></div>
             </aside>
         </div>
     </div>
@@ -66,6 +111,53 @@
 <footer class="container-fluid">
     <p>Footer Text</p>
 </footer>
+
+<script src="../scripts/shoppingCart.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $(".add-to-cart").click(function (event) {
+            event.preventDefault();
+            var name = $(this).attr("data-name");
+            var price = Number($(this).attr("data-price"));
+
+            shoppingCart.addItemToCart(name, price, 1);
+            displayCart();
+        });
+
+        function displayCart() {
+            var cartArray = shoppingCart.listCart();
+            console.log(cartArray);
+            var output = "";
+
+            for (var i in cartArray) {
+                output += "<tr> <td> " + cartArray[i].name
+                        + " </td> <td> " + cartArray[i].price
+                        + " </td> <td> <input type='number' class=' form-control bfh-number item-count input-sm' min='1' step='1' data-name='"
+                        + cartArray[i].name+ "' value='" + cartArray[i].count+ "'/> "
+                        + " </td> <td> " + cartArray[i].total
+                        + " </td></tr>";
+            }
+
+            $("#show-cart").html(output);
+            //$("#count-cart").html( shoppingCart.countCart() );
+            $("#total-cart").html( shoppingCart.totalCart() );
+        }
+
+        var temp = document.querySelector("#quantity-input");
+        temp.addEventListener("change",quantityChange,false)
+
+        function quantityChange(e) {
+            if (e.target !== e.currentTarget) {
+                var name = e.target.dataset.name;
+                var count = e.target.value;
+                shoppingCart.setCountForItem(name, count);
+                displayCart();
+            }
+            e.stopPropagation();
+        }
+    });
+</script>
 </body>
 </html>
 
