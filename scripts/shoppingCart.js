@@ -30,7 +30,7 @@ var shoppingCart = (function () {
     obj.addItemToCart = function (name, price, count) {
         for (var i in cart) {
             if (cart[i].name === name) {
-                cart[i].count += count;
+                cart[i].count += Number(count);
                 saveCart();
                 return;
             }

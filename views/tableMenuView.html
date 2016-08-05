@@ -5,6 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <meta charset="UTF-8">
     <title> Table {{ tableId }} </title>
     <style>
@@ -36,12 +37,14 @@
 </head>
 <body>
 <header>
-    <h1>I AM RESTAURANT</h1>
+    <div>
+        <h2>I AM RESTAURANT<h2/>
+        <button type="button" id="service-btn" class="btn btn-info btn-cust">Service</button>
+        <button type="button" id="check-plz-btn" class="btn btn-success btn-cust">Check</button>
+    </div>
 </header>
 <div class="container-fluid">
     <div class="row content">
-
-
         <div class="col-sm-9">
             <h4>Menu</h4>
             <hr>
@@ -102,7 +105,16 @@
                     </tbody>
                 </table>
                 <hr/>
-                <div>Cart Total: <span id="total-cart"></span></div>
+                <div>Cart Total: <span id="total-cart"></span>
+                    <button type="button" id="clear-cart" class="btn btn-default pull-right">
+                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+                <hr/>
+                <div>
+                    <button type="button" class="btn btn-primary btn-success btn-block" id="send-order-btn"> Send order </button>
+                </div>
+
             </aside>
         </div>
     </div>
@@ -116,6 +128,11 @@
 
 <script>
     $(document).ready(function() {
+        displayCart();
+
+        var socket = io.connect('http://localhost:8080', {query: 'tableId='+window.location.href.split('/')[1]});
+
+
         $(".add-to-cart").click(function (event) {
             event.preventDefault();
             var name = $(this).attr("data-name");
@@ -133,7 +150,7 @@
             for (var i in cartArray) {
                 output += "<tr> <td> " + cartArray[i].name
                         + " </td> <td> " + cartArray[i].price
-                        + " </td> <td> <input type='number' class=' form-control bfh-number item-count input-sm' min='1' step='1' data-name='"
+                        + " </td> <td> <input type='number' class=' form-control bfh-number item-count input-sm' min='0' step='1' data-name='"
                         + cartArray[i].name+ "' value='" + cartArray[i].count+ "'/> "
                         + " </td> <td> " + cartArray[i].total
                         + " </td></tr>";
@@ -151,11 +168,35 @@
             if (e.target !== e.currentTarget) {
                 var name = e.target.dataset.name;
                 var count = e.target.value;
-                shoppingCart.setCountForItem(name, count);
+                if (count == 0) {
+                    shoppingCart.removeItemFromCartAll(name);
+                }
+                else {
+                    shoppingCart.setCountForItem(name, count);
+                }
                 displayCart();
             }
             e.stopPropagation();
         }
+
+        $("#clear-cart").click(function(event){
+            shoppingCart.clearCart();
+            displayCart();
+        });
+
+        $("#check-plz-btn").click(function(event){
+           alert("CHECK PLZ");
+        });
+
+        $("#service-btn").click(function(event){
+            alert("NEEDZ SERVICE");
+        });
+
+        $("#send-order-btn").click(function(event){
+            alert("ORDER");
+            shoppingCart.clearCart();
+            displayCart();
+        });
     });
 </script>
 </body>
