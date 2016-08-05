@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitchen Orders</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>Restaurant Orders</h1>
+    <hr/>
+    <div>
+        <table class="table">
+            <thead>
+                <tr class="bg-success">
+                    <td class="col-xs-1">Order#</td>
+                    <td class="col-xs-1">Table#</td>
+                    <td>Dish</td>
+                    <td class="col-xs-1">quantity</td>
+                    <td class="col-xs-1">Finished</td>
+                </tr>
+            </thead>
+            <tbody id="show-orders">
+                <tr>
+                    <td colspan="4">There're no orders... =(</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var socket = io.connect('http://localhost:8080');
+        });
+    </script>
+</body>
+</html>
