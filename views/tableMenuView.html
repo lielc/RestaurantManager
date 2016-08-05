@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <meta charset="UTF-8">
     <title> Table {{ tableId }} </title>
     <style>
@@ -38,7 +37,7 @@
 <body>
 <header>
     <div>
-        <h2>I AM RESTAURANT<h2/>
+        <h2>I AM RESTAURANT</h2>
         <button type="button" id="service-btn" class="btn btn-info btn-cust">Service</button>
         <button type="button" id="check-plz-btn" class="btn btn-success btn-cust">Check</button>
     </div>
@@ -128,10 +127,30 @@
 
 <script>
     $(document).ready(function() {
+
+        var socket = io.connect('http://localhost:8080');
         displayCart();
 
-        var socket = io.connect('http://localhost:8080', {query: 'tableId='+window.location.href.split('/')[1]});
+        $("#send-order-btn").click(function(event){
+            var cart = shoppingCart.listCart();
+            if ( cart.length == 0) {
+                alert("No items in cart!");
+            }
+            else {
+                socket.emit("sendOrder",cart);
+                shoppingCart.clearCart();
+                displayCart();
+            }
+        });
 
+
+        $("#check-plz-btn").click(function(event){
+            socket.emit("requestCheck");
+        });
+
+        $("#service-btn").click(function(event){
+            socket.emit("requestService");
+        });
 
         $(".add-to-cart").click(function (event) {
             event.preventDefault();
@@ -157,7 +176,6 @@
             }
 
             $("#show-cart").html(output);
-            //$("#count-cart").html( shoppingCart.countCart() );
             $("#total-cart").html( shoppingCart.totalCart() );
         }
 
@@ -184,19 +202,6 @@
             displayCart();
         });
 
-        $("#check-plz-btn").click(function(event){
-           alert("CHECK PLZ");
-        });
-
-        $("#service-btn").click(function(event){
-            alert("NEEDZ SERVICE");
-        });
-
-        $("#send-order-btn").click(function(event){
-            alert("ORDER");
-            shoppingCart.clearCart();
-            displayCart();
-        });
     });
 </script>
 </body>
