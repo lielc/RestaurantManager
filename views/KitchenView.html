@@ -15,11 +15,11 @@
         <table class="table">
             <thead>
                 <tr class="bg-success">
+                    <td class="col-xs-1">Finished</td>
                     <td class="col-xs-1">Order#</td>
                     <td class="col-xs-1">Table#</td>
-                    <td>Dish</td>
                     <td class="col-xs-1">quantity</td>
-                    <td class="col-xs-1">Finished</td>
+                    <td>Dish</td>
                 </tr>
             </thead>
             <tbody id="show-orders">
@@ -33,6 +33,55 @@
     <script>
         $(document).ready(function() {
             var socket = io.connect('http://localhost:8080');
+            socket.emit('DisplayMenuItems');
+
+            socket.on('displayOrders',function(ordersArr){
+                displayOrders(ordersArr);
+            })
+
+            function displayOrders(ordersArr){
+                var orders = ordersArr;
+                console.log(orders);
+                var output = "";
+                var finalOutput = "";
+                var newOutput = "";
+                var orderDishArr;
+                var dishCount = 0;
+
+                for (var i in orders) {
+                    output = "";
+                    newOutput = "";
+                    dishCount = 0;
+                    for (var j in orders[i].dishArr) {
+                        orderDishArr = orders[i].dishArr
+                        output += "<tr> <td> "+  orderDishArr[j].count
+                                + " </td> <td> " + orderDishArr[j].name   + " </td></tr>";
+                        dishCount++;
+                    }
+
+                    newOutput = output.slice(0,4) + "<td rowspan='"+ dishCount+"'>SUBMIT ME</td>"
+                            +"<td rowspan='"+ dishCount+"'>"+orders[i].orderNum+"</td>"
+                            +"<td rowspan='"+ dishCount+"'>"+orders[i].tableNum+"</td>"+ output.slice(4);
+                    finalOutput += newOutput;
+                }
+
+                $("#show-orders").html(finalOutput);
+                /*var ordersA = shoppingCart.listCart();
+                console.log(cartArray);
+                var output = "";
+
+                for (var i in cartArray) {
+                    output += "<tr> <td> " + cartArray[i].name
+                            + " </td> <td> " + cartArray[i].price
+                            + " </td> <td> <input type='number' class=' form-control bfh-number item-count input-sm' min='0' step='1' data-name='"
+                            + cartArray[i].name+ "' value='" + cartArray[i].count+ "'/> "
+                            + " </td> <td> " + cartArray[i].total
+                            + " </td></tr>";
+                }
+
+                $("#show-cart").html(output);
+                $("#total-cart").html( shoppingCart.totalCart() );*/
+            }
         });
     </script>
 </body>
