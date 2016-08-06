@@ -63,24 +63,9 @@ app.get('/tableScreen/:tableId', function (req, res) {
 });
 
 app.get('/kitchen', function (req, res) {
-    /*var ordersArr = kitchen.getActiveOrders();
-    var ordersHtml = "";
-
-    for (var currOrder in ordersArr) {
-        // curr order = orderNum: 1,tableNum: 1, DishArr: [{name:"Test1",quantity:2},{name:"Test2",quantity:1}]
-        var numOfDishes = ordersArr[currOrder].
-
-        ordersHtml +=
-            "<tr> <td rowspan='"+ numOfDishes +"'> " + curOrder.orderNum + " </td> " +
-            "<td rowspan='"+ numOfDishes +"> " + curOrder.tableNum+ " </td>" +
-            "<td> "+ curOrder.DishArr.name + " </td>";
-            "<td> "+ curOrder.DishArr.quantity + " </td> </tr>";
-        for (var j=1; j<numOfDishes; j++) {
-            "<tr><td> " +  + " </td></tr>"
-        }
-    }
-    */
-    //res.render('kitchenView',{orders: ordersHtml});
+    /*if (!(kitchen.isOpen)){
+        kitchen.init(collection)
+    }*/
     res.render('kitchenView');
 });
 
@@ -103,8 +88,12 @@ io.sockets.on('connection',function (socket)
     });*/
     console.log("Client connected");
 
-    socket.on('sendOrder', function(cart){
-        console.log("order sent. details (first item only): " + cart[0].name);
+    // CONTINUE FROM HERE PLEASE
+    socket.on('sendOrder', function(menuItems,tableId){
+        console.log("order sent. details (first item only): " + menuItems[0].name);
+        kitchen.addOrder(menuItems,tableId);
+        var ordersArr = kitchen.getActiveOrders();
+        io.emit('displayOrders',ordersArr);
     })
     socket.on('requestCheck', function(){
         console.log("request check");
@@ -125,4 +114,4 @@ io.sockets.on('connection',function (socket)
 server.listen(port);
 console.log('Server listening on port ' + port);
 
-exports = module.exports = app;
+//exports = module.exports = app;

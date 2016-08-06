@@ -137,9 +137,10 @@
                 alert("No items in cart!");
             }
             else {
-                socket.emit("sendOrder",cart);
+                var pathArray = window.location.pathname.split( '/' );
                 shoppingCart.clearCart();
                 displayCart();
+                socket.emit("sendOrder",cart, pathArray[2]);
             }
         });
 
