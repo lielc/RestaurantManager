@@ -20,21 +20,28 @@ function getData(res) {
             console.log("Connected correctly to server");
             var collection = db.collection("MenuItems");
             collection.find().toArray(function (err, items) {
-                var temp = items[0].RestaurantManagerDB;
-                var ans = "";
-                for (var i = 0; i < temp.length; i++) {
-                    ans += "Name: " + temp[i].Name + "\n";
-                    ans += "Description: " + temp[i].Description + "\n";
-                    ans += "Price: " + temp[i].Price + "\n";
-                    ans += "Type: " + temp[i].Type + "\n";
-                    ans += "\n"
-                    ans += "\n"
+
+                var ans_main = "";
+                var ans_starter = "";
+                var ans_drink = "";
+                var ans_salad = "";
+
+                for (var i = 0; i < items.length; i++) {
+                    temp = "";
+                    itemType = items[i].Type;
+
+                    temp = "<tr> <td> " + items[i].Name
+                        + " </td> <td> " + items[i].Description
+                        + " </td> <td> " + items[i].Price
+                        + " </td> <td> " + "Liel" + items[i].Name + "Cohen" + items[i].Price + "Dor"
+                        + " </td></tr>";
+
+                    if (itemType == "main") {ans_main += temp;}
+                    if (itemType == "starter") {ans_starter += temp;}
+                    if (itemType == "drink") {ans_drink += temp;}
+                    if (itemType == "salad") {ans_salad += temp;}
                 }
-                console.log(ans);
-                ans = ans.replace(/(?:\r\n|\r|\n)/g, " <br/> ");
-
-                res.render('tableMenuView', { items: ans });
-
+                res.render('tableMenuView', { ans_main: ans_main, starter: ans_starter, drink: ans_drink, salad: ans_salad });
             });
         }
     });
@@ -54,12 +61,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/'));
 
 //Routing
+app.get('/', function (req, res) {
+    res.render('index');
+});
+
 app.get('/tableScreen/:tableId', function (req, res) {
     var tableId = req.params.tableId;
-
-    // waiting for gilad
-    //getData(res);
-    res.render('tableMenuView', {tableId: tableId});
+    getData(res);
 });
 
 app.get('/kitchen', function (req, res) {
@@ -88,7 +96,6 @@ io.sockets.on('connection',function (socket)
     });*/
     console.log("Client connected");
 
-    // CONTINUE FROM HERE PLEASE
     socket.on('sendOrder', function(menuItems,tableId){
         console.log("order sent. details (first item only): " + menuItems[0].name);
         kitchen.addOrder(menuItems,tableId);

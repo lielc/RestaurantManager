@@ -49,35 +49,21 @@
             <hr>
             <div>
                 <table class="table">
-                    <tbody>
-                        <tr>
-                            <td colspan="4" class="bg-success">
-                                <b>Main Course</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> Fried Chicken Sandwich </td>
-                            <td> Served with pickles, lettuce, tomato, American cheese, and hot sauce on challah bread </td>
-                            <td> 55 </td>
-                            <td><a class="btn btn-default add-to-cart" href="#" role="button" data-name="Fried Chicken Sandwich" data-price="55">Add to cart</a></td>
-                        </tr>
-                        <tr>
-                            <td> Margherita Pizza </td>
-                            <td>Tomato sauce, mozzarella, and basil on top of our homemade pizza dough</td>
-                            <td>45</td>
-                            <td><a class="btn btn-default add-to-cart" href="#" role="button" data-name="Margherita Pizza" data-price="45">Add to cart</a></td>
-                        </tr>
-                        <tr class="bg-success">
-                            <td colspan="4" scope="row">
-                                <b>Salads</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> Green Salad </td>
-                            <td>Mixed greens, spinach, cherry tomato, endive, mustard vinaigrette</td>
-                            <td>25</td>
-                            <td><a class="btn btn-default add-to-cart" href="#" role="button" data-name="Green Salad" data-price="25">Add to cart</a></td>
-                        </tr>
+                    <tbody id="starter">
+                    </tbody>
+                </table>
+                <table class="table">
+                    <tbody id="salad">
+                    </tbody>
+                </table>
+                </table>
+                <table class="table">
+                    <tbody id="main">
+                    </tbody>
+                </table>
+                </table>
+                <table class="table">
+                    <tbody id="drink">
                     </tbody>
                 </table>
             </div>
@@ -129,6 +115,7 @@
     $(document).ready(function() {
 
         var socket = io.connect('http://localhost:8080');
+        ReformatString("{{ans_main}}", "{{starter}}", "{{drink}}", "{{salad}}");
         displayCart();
 
         $("#send-order-btn").click(function(event){
@@ -161,6 +148,41 @@
             shoppingCart.addItemToCart(name, price, 1);
             displayCart();
         });
+
+        function replaceString(str){
+            string_1 = "<a class='btn btn-default add-to-cart' href='#' role='button' data-name=\'";
+            string_2 = "\' data-price=";
+            string_3 = " >Add to cart</a>";
+
+            str = str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+            str = str.replace(/Liel/g, string_1).replace(/Cohen/g, string_2).replace(/Dor/g, string_3);
+            return str;
+        }
+
+        function ReformatString(main, starter, drink, salad){
+
+            var ans_main = "<tr><td colspan=\"4\" class=\"bg-success\"><b>Main Course</b></td></tr>";
+            var ans_starter = "<tr class=\"bg-success\"><td colspan=\"4\" scope=\"row\"><b>Starters</b></td></tr>";
+            var ans_drink = "<tr class=\"bg-success\"><td colspan=\"4\" scope=\"row\"><b>Drinks</b></td></tr>";
+            var ans_salad = "<tr class=\"bg-success\"><td colspan=\"4\" scope=\"row\"><b>Salads</b></td></tr>";
+
+            main = ans_main + replaceString(main);
+            starter = ans_starter + replaceString(starter);
+            salad = ans_salad + replaceString(salad);
+            drink = ans_drink + replaceString(drink);
+
+            element_main = document.getElementById('main');
+            element_main.innerHTML = main;
+
+            element_salad = document.getElementById('salad');
+            element_salad.innerHTML = salad;
+
+            element_starter = document.getElementById('starter');
+            element_starter.innerHTML = starter;
+
+            element_drink = document.getElementById('drink');
+            element_drink.innerHTML = drink;
+        }
 
         function displayCart() {
             var cartArray = shoppingCart.listCart();
@@ -202,7 +224,6 @@
             shoppingCart.clearCart();
             displayCart();
         });
-
     });
 </script>
 </body>
