@@ -74,6 +74,10 @@ app.get('/kitchen', function (req, res) {
     /*if (!(kitchen.isOpen)){
         kitchen.init(collection)
     }*/
+
+    var orders = kitchen.getActiveOrders();
+
+    //res.render('kitchenView',{ordersArr: orders});
     res.render('kitchenView');
 });
 
@@ -98,9 +102,8 @@ io.sockets.on('connection',function (socket)
 
     socket.on('sendOrder', function(menuItems,tableId){
         console.log("order sent. details (first item only): " + menuItems[0].name);
-        kitchen.addOrder(menuItems,tableId);
-        var ordersArr = kitchen.getActiveOrders();
-        io.emit('displayOrders',ordersArr);
+        kitchen.addOrder(menuItems,tableId, new Date().toLocaleString());
+        io.emit('displayOrders', kitchen.getActiveOrders());
     })
     socket.on('requestCheck', function(){
         console.log("request check");
