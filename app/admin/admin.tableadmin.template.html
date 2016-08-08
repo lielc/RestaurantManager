@@ -1,0 +1,35 @@
+<h3>Tables Administration</h3>
+<div class="row" ng-controller="tableAdminCtrl">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th class="col-xs-2">Table#</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="i in [1,numOftables] | makeOddRange">
+                    <td>{{i}}</td>
+                    <td>{{tables[i-1]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table col-md-6  table-bordered table-striped">
+            <thead>
+            <tr>
+                <th class="col-xs-2">Table#2</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  ng-repeat="i in [1,numOftables] | makeEvenRange">
+                <td>{{i}}</td>
+                <td>{{tables[i-1]}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -53,7 +53,7 @@ io.sockets.on('connection',function (socket)
 
 // routing
 app.get('/', function(req, res) {
-        res.render(__dirname + '/views/index');
+        res.render(__dirname + '/app/index');
 });
 
 /*

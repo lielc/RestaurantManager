@@ -6,7 +6,8 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     mongodb = require('mongodb'),
     path = require('path'),
-    kitchen = require('./scripts/kitchenManager');
+    kitchen = require('./scripts/kitchenManager'),
+    tablesService = require('./scripts/tablesService');
 
 function getData(res) {
     var db = require('mongodb').Db,
@@ -62,7 +63,7 @@ app.use(express.static(__dirname + '/'));
 
 //Routing
 app.get('/', function (req, res) {
-    res.render('index');
+    res.render('../app/index');
 });
 
 app.get('/tableScreen/:tableId', function (req, res) {
@@ -119,6 +120,12 @@ io.sockets.on('connection',function (socket)
     socket.on('', function(){
 
     });
+});
+
+app.get('/api/tables/', function(req, res) {
+    tablesService.getAllTables(function (results) {
+        res.json({status: 'success', tables: results});
+    })
 });
 
 server.listen(port);

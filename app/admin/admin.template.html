@@ -1,0 +1,31 @@
+<div>
+    <header class="page-header">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <span class="navbar-brand m-b-0">Restaurant Manager</span>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a class="navbar-link" ui-sref=".tableadmin">Table Administraion </a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-link" ui-sref=".menuedit">Menu Edit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-link" >Statistics</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</div>
+<div>
+    <div class="container" ui-view></div>
+</div>
+<footer class="navbar navbar-default navbar-fixed-bottom"></footer>
+
+<script>
+    $(document).ready(function() {
+    $(".nav a").on("click", function(){
+        $(".nav").find(".active").removeClass("active");
+        $(this).parent().addClass("active");
+    });
+});
+</script>

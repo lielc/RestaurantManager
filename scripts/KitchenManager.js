@@ -6,9 +6,10 @@
     var activeOrdersArr = [];
     var nextOrderId = 1;
 
-    function TableOrder(orderNum, tableNum, dishArr) {
+    function TableOrder(orderNum, tableNum, orderDate,dishArr) {
         this.orderNum = orderNum;
         this.tableNum = tableNum;
+        this.orderDate = orderDate;
         this.dishArr = dishArr;
     };
 
@@ -36,8 +37,9 @@ exports.getActiveOrders = function () {
     return activeOrdersArr;
 }
 
-exports.addOrder = function (menuItems,tableId) {
-    var newOrder = new TableOrder(tableId,2,menuItems);
+// NEEDS ORDER NUMS
+exports.addOrder = function (menuItems,tableId, orderDate) {
+    var newOrder = new TableOrder(2, tableId,orderDate,menuItems);
     activeOrdersArr.push(newOrder);
     console.log("NEW ORDER: " +tableId+ " " + 2 + " " + menuItems[0].name);
 }
