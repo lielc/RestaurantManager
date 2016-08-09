@@ -106,13 +106,15 @@ io.sockets.on('connection',function (socket)
         kitchen.addOrder(menuItems,tableId, new Date().toLocaleString());
         io.emit('displayOrders', kitchen.getActiveOrders());
     })
-    socket.on('requestCheck', function(){
-        console.log("request check");
+    socket.on('requestCheck', function(tableId){
+        io.emit('requestCheck', tableId);
     })
-    socket.on('requestService', function(){
-        console.log("request service");
+    socket.on('requestService', function(tableId){
+        io.emit('requestService', tableId);
     })
-
+    socket.on('tableOccupied', function(tableId){
+        io.emit('tableOccupied', tableId);
+    })
     socket.on('disconnect', function() {
         console.log("Client disconnected");
     });
@@ -127,6 +129,22 @@ app.get('/api/tables/', function(req, res) {
         res.json({status: 'success', tables: results});
     })
 });
+
+app.get('/api/tables/:tableId', function(req, res) {
+    tableId = req.params.tableId;
+
+    tablesService.getTableStatusById(tableId, function (results) {
+        res.json({status: 'success', table: results});
+    })
+});
+
+app.put('/api/tables/:tableId/:statusCode', function(req, res) {
+    tableId = req.params.tableId;
+    statusCode = req.params.statusCode;
+
+    tablesService.updateTableStatus(tableId,statusCode);
+    res.json({status: 'success'});
+    });
 
 server.listen(port);
 console.log('Server listening on port ' + port);

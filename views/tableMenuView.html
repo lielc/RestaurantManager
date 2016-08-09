@@ -38,6 +38,7 @@
 <header>
     <div>
         <h2>I AM RESTAURANT</h2>
+        <button type="button" id="start-btn" class="btn btn-danger btn-cust">Check</button>
         <button type="button" id="service-btn" class="btn btn-info btn-cust">Service</button>
         <button type="button" id="check-plz-btn" class="btn btn-success btn-cust">Check</button>
     </div>
@@ -117,6 +118,7 @@
         var socket = io.connect('http://localhost:8080');
         ReformatString("{{ans_main}}", "{{starter}}", "{{drink}}", "{{salad}}");
         displayCart();
+        var tableId = (window.location.pathname.split( '/' ))[2];
 
         $("#send-order-btn").click(function(event){
             var cart = shoppingCart.listCart();
@@ -132,12 +134,16 @@
         });
 
 
+        $("#start-btn").click(function(event){
+            socket.emit("tableOccupied",tableId);
+        });
+
         $("#check-plz-btn").click(function(event){
-            socket.emit("requestCheck");
+            socket.emit("requestCheck",tableId);
         });
 
         $("#service-btn").click(function(event){
-            socket.emit("requestService");
+            socket.emit("requestService",tableId);
         });
 
         $(".add-to-cart").click(function (event) {

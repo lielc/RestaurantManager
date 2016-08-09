@@ -1,7 +1,7 @@
 <h3>Tables Administration</h3>
-<div class="row" ng-controller="tableAdminCtrl">
+<div class="row" ng-controller="tableAdminCtrl" id="tableAdminCtrl">
     <div class="col-md-6">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered">
             <thead>
             <tr>
                 <th class="col-xs-2">Table#</th>
@@ -9,23 +9,25 @@
             </tr>
             </thead>
             <tbody>
-                <tr  ng-repeat="i in [1,numOftables] | makeOddRange">
-                    <td>{{i}}</td>
-                    <td>{{tables[i-1]}}</td>
-                </tr>
+            <tr  ng-repeat="i in [1,numOftables] | makeOddRange" id="{{'table'+i+'Row'}}"
+                 ng-class="{'': tables[i-1] == statusTypes[0],'active': tables[i-1] == statusTypes[1],'bg-danger': tables[i-1] == statusTypes[2],'bg-success': tables[i-1] == statusTypes[3]}">
+                <td>{{i}}</td>
+                <td>{{tables[i-1]}}</td>
+            </tr>
             </tbody>
         </table>
     </div>
     <div class="col-md-6">
-        <table class="table col-md-6  table-bordered table-striped">
+        <table class="table col-md-6  table-bordered  ">
             <thead>
             <tr>
-                <th class="col-xs-2">Table#2</th>
+                <th class="col-xs-2">Table#</th>
                 <th>Status</th>
             </tr>
             </thead>
             <tbody>
-            <tr  ng-repeat="i in [1,numOftables] | makeEvenRange">
+            <tr  ng-repeat="i in [1,numOftables] | makeEvenRange" id="{{'table'+i+'Row'}}"
+                 ng-class="{'': tables[i-1] == statusTypes[0],'active': tables[i-1] == statusTypes[1],'bg-danger': tables[i-1] == statusTypes[2],'bg-success': tables[i-1] == statusTypes[3]}">
                 <td>{{i}}</td>
                 <td>{{tables[i-1]}}</td>
             </tr>
@@ -33,3 +35,24 @@
         </table>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        var socket = io.connect('http://localhost:8080');
+        var ctrlr = angular.element(document.getElementById('tableAdminCtrl')).scope()
+
+        socket.on("tableOccupied", function(tableId){
+            console.log("occupied by "+tableId);
+            ctrlr.updateTableStatus(tableId,ctrlr.statusTypes.indexOf("OCCUPIED"));
+        })
+
+        socket.on('requestCheck', function(tableId){
+            console.log("requestCheck by "+tableId);
+            ctrlr.updateTableStatus(tableId,ctrlr.statusTypes.indexOf("REQ_CHECK"));
+        })
+        socket.on('requestService', function(tableId){
+            console.log("requestService by "+tableId);
+            ctrlr.updateTableStatus(tableId,ctrlr.statusTypes.indexOf("SERVICE"));
+        })
+    });
+</script>

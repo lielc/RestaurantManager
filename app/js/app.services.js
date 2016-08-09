@@ -4,9 +4,17 @@ angular.module('RestMgrApp')
         var urlBase = '/api/tables';
 
         this.getAllTables = function () {
-            var temp = $http.get(urlBase);
-            return temp;
+            return $http.get(urlBase);
         };
+
+        this.updateTableStatus = function (tableId,newStatusCode) {
+            return $http.put(urlBase + '/' + tableId+ '/' + newStatusCode);
+        };
+
+        this.getTableStatusById = function (tableId) {
+            return $http.get(urlBase + '/' + tableId);
+        };
+
 
         /*this.getCustomer = function (id) {
             return $http.get(urlBase + '/' + id);

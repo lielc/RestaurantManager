@@ -2,7 +2,12 @@ angular.module('RestMgrApp').controller('tableAdminCtrl', ['$scope','tablesDataS
     $scope.numOftables = 20;
     $scope.statusTypes = Constants.TableStatusType;
     $scope.tables;
-
+    
+    $scope.updateTableStatus = function(tableId,newStatusCode){
+        tablesDataService.updateTableStatus(tableId,newStatusCode).then(function(){
+            $scope.tables[tableId-1] = Constants.TableStatusType[newStatusCode];
+        })
+    };
 
     getAllTables();
 
@@ -10,5 +15,12 @@ angular.module('RestMgrApp').controller('tableAdminCtrl', ['$scope','tablesDataS
         tablesDataService.getAllTables().then(function(response){
             $scope.tables = response.data.tables;
         })
+    };
+
+    function getTableStatusById(tableId){
+         tablesDataService.getTableStatusById(tableId).then(function (response) {
+             var temp20 = response.data.table;
+            return response.data.table;
+        });
     };
 }]);

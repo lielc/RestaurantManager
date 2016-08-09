@@ -13,3 +13,11 @@ function init(){
 exports.getAllTables = function(callback){
     callback(tablesArr);
 };
+
+exports.getTableStatusById = function(tableId, callback){
+    callback(tablesArr[tableId-1]);
+}
+
+exports.updateTableStatus = function(tableId,statusCode){
+    tablesArr[tableId-1] = statusType[statusCode];
+};
