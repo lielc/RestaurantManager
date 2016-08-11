@@ -3,15 +3,16 @@ var RestMgrApp = angular.module('RestMgrApp', ['ui.router']);
 
 RestMgrApp.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('admin');
 
     $stateProvider
         .state('admin', {
             url: '/admin',
-            templateUrl: 'app/admin/admin.template.html'
+            templateUrl: 'app/admin/admin.template.html',
+            abstract: true
         })
         .state('admin.tableadmin', {
-            url: '/tableadmin',
+            url: '',
             templateUrl: 'app/admin/admin.tableadmin.template.html'
 
         })

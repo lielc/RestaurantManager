@@ -7,19 +7,22 @@ var express = require('express'),
     mongodb = require('mongodb'),
     path = require('path'),
     kitchen = require('./scripts/kitchenManager'),
-    tablesService = require('./scripts/tablesService');
+    tablesService = require('./scripts/tablesService'),
+    menuService = require('./scripts/menuService');
 
+var collection;
 function getData(res) {
     var db = require('mongodb').Db,
         Server = require('mongodb').Server,
         MongoClient = require('mongodb').MongoClient;
+
 
     var dbUrl = 'mongodb://localhost:27017/RestaurantManagerDB';
     MongoClient.connect(dbUrl, function (err, db) {
         if (err) { console.log(err) }
         else {
             console.log("Connected correctly to server");
-            var collection = db.collection("MenuItems");
+            collection = db.collection("MenuItems");
             collection.find().toArray(function (err, items) {
 
                 var ans_main = "";
@@ -145,6 +148,56 @@ app.put('/api/tables/:tableId/:statusCode', function(req, res) {
     tablesService.updateTableStatus(tableId,statusCode);
     res.json({status: 'success'});
     });
+
+app.get('/api/menu/', function(req, res) {
+    console.log('*** getAllMenuItems');
+
+    menuService.getAllMenuItems(collection,function (err, menuItems) {
+        if (err) {
+            console.log('*** menuItems err');
+            res.json({
+                menuItems: menuItems
+            });
+        } else {
+            console.log('*** menuItems ok');
+            res.json(menuItems);
+        }
+    });
+});
+
+app.delete('/api/menu/delete/:id', function(req, res) {
+    console.log('*** deleteMenuItem');
+
+    menuService.deleteMenuItem(collection, req.params.id,function (err){
+        if (err) {
+            console.log('*** deleteMenuItem err');
+            res.json({ 'status': false });
+        } else {
+            console.log('*** deleteMenuItem ok');
+            res.json({ 'status': true });
+        }
+    })
+});
+
+/*exports.addCustomer = function (req, res) {
+    console.log('*** addCustomer');
+    db.getState(req.body.stateId, function (err, state) {
+        if (err) {
+            console.log('*** getState err');
+            res.json({ 'status': false });
+        } else {
+            db.insertCustomer(req.body, state, function (err) {
+                if (err) {
+                    console.log('*** addCustomer err');
+                    res.json(false);
+                } else {
+                    console.log('*** addCustomer ok');
+                    res.json(req.body);
+                }
+            });
+        }
+    });
+};*/
 
 server.listen(port);
 console.log('Server listening on port ' + port);
