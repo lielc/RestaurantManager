@@ -1,6 +1,8 @@
 <h3>Menu Edit</h3>
 <div class="row" ng-controller="menuEditCtrl" id="menuEditCtrl">
-    <button class="btn btn-lg"><span class="glyphicon-plus"> Add Menu Item</span></button>
+    <button class="btn btn-lg" ui-sref=".add" data-toggle="modal" data-target="#myModal"><span class="glyphicon-plus"> Add Menu Item</span></button>
+    <div ui-view></div>
+
     <table class="table">
         <thead>
             <th>Dish Name</th>

@@ -20,6 +20,10 @@ RestMgrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/menuedit',
             templateUrl: 'app/admin/admin.menuedit.template.html'
         })
+        .state('admin.menuedit.add', {
+            url: '/add',
+            templateUrl: 'app/admin/admin.menuedit.add.template.html'
+        })
 });
 
 RestMgrApp.constant('Constants', {
