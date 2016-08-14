@@ -34,16 +34,25 @@ exports.deleteMenuItem = function(collection,id,callback){
     });
 };
 
-exports.addMenuItem = function(collection,req_body,callback){
+exports.editMenuItem = function(collection, newItem, callback){
+    console.log('*** accessDB.editMenuItem');
+    collection.update(
+        { _id: newItem.id },
+        {
+            $set: {
+                Description: newItem.Description,
+                Name: newItem.Name,
+                Price: newItem.Price,
+                Type: newItem.Type
+            }
+        }, function(err){
+            callback(null);
+        });
+};
+
+exports.addMenuItem = function(collection,newItem,callback){
     console.log('*** accessDB.addMenuItem');
-
-    var newMenuItem;
-
-    newMenuItem.Name = req_body.name;
-    newMenuItem.Description = req_body.description;
-    newMenuItem.Price = req_body.price;
-
-    collection.insertOne(newMenuItem, function(err,result){
+    collection.insertOne(newItem, function(err,result){
             callback(err);
     });
 };

@@ -16,11 +16,15 @@ RestMgrApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/admin/admin.tableadmin.template.html'
 
         })
-        .state('admin.menuedit', {
-            url: '/menuedit',
-            templateUrl: 'app/admin/admin.menuedit.template.html'
+        .state('admin.menuedit_display', {
+            url: '/menuedit_display',
+            templateUrl: 'app/admin/admin.menuedit.display.template.html'
         })
-        .state('admin.menuedit.add', {
+        .state('admin.menuedit_edit', {
+            url: '/menuedit_edit',
+            templateUrl: 'app/admin/admin.menuedit.edit.template.html'
+        })
+        .state('admin.menuedit_display.add', {
             url: '/add',
             templateUrl: 'app/admin/admin.menuedit.add.template.html'
         })

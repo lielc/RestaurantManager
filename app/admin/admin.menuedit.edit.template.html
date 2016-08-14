@@ -1,0 +1,88 @@
+<h3>Menu Edit</h3>
+<div class="row" ng-controller="menuEditCtrl" id="menuEditCtrl">
+   <!-- <button class="btn btn-lg" ui-sref="admin.menuedit.add" data-toggle="modal" data-target="#myModal"><span class="glyphicon-plus"> Add Menu Item</span></button>-->
+    <div ui-view></div>
+
+    <table class="table">
+        <thead>
+            <th>Dish Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tr class="bg-success">
+            <th colspan="5">Starters</th>
+        </tr>
+        <tr  ng-repeat="mi in menuItems | filter:{ Type: 'starter' }">
+
+            <td><input type="text" ng-model="mi.Name" /></td>
+            <td><input type="text" ng-model="mi.Description" style="width: 500px" /></td>
+            <td><input type="text" ng-model="mi.Price" style="width: 100px" /></td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="editMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="deleteMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        <tr class="bg-success">
+            <th colspan="5">Main Dishes</th>
+        </tr>
+        <tr  ng-repeat="mi in menuItems | filter:{ Type: 'main' }">
+            <td><input type="text" ng-model="mi.Name" /></td>
+            <td><input type="text" ng-model="mi.Description" style="width: 500px" /></td>
+            <td><input type="text" ng-model="mi.Price" style="width: 100px" /></td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="editMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="deleteMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        <tr class="bg-success">
+            <th colspan="5">Salads</th>
+        </tr>
+        <tr  ng-repeat="mi in menuItems | filter:{ Type: 'salad' }">
+            <td><input type="text" ng-model="mi.Name" /></td>
+            <td><input type="text" ng-model="mi.Description" style="width: 500px" /></td>
+            <td><input type="text" ng-model="mi.Price" style="width: 100px" /></td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="editMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="deleteMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        <tr class="bg-success">
+            <th colspan="5">Drinks</th>
+        </tr>
+        <tr  ng-repeat="mi in menuItems | filter:{ Type: 'drink' }">
+            <td><input type="text" ng-model="mi.Name" /></td>
+            <td><input type="text" ng-model="mi.Description" style="width: 500px" /></td>
+            <td><input type="text" ng-model="mi.Price" style="width: 100px" /></td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="editMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="deleteMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

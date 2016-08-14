@@ -6,6 +6,7 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     mongodb = require('mongodb'),
     path = require('path'),
+    ObjectID = require('mongodb').ObjectID,
     kitchen = require('./scripts/kitchenManager'),
     tablesService = require('./scripts/tablesService'),
     menuService = require('./scripts/menuService');
@@ -165,6 +166,41 @@ app.get('/api/menu/', function(req, res) {
     });
 });
 
+app.post('/api/menu/edit', function(req,res)
+{
+    console.log("NewItem: %j", req.body.newItem.Price);
+    var objectId = new ObjectID(req.body.newItem.id);
+    var newItem = req.body.newItem;
+    newItem.id = objectId;
+    menuService.editMenuItem(collection,newItem, function(err){
+        if(err)
+        {
+            console.log('*** editMenuItem err');
+            res.json({ 'status': false });
+        }
+        else {
+            console.log('*** editMenuItem ok');
+            res.json({ 'status': true });
+        }
+    });
+});
+
+app.post('/api/menu/add', function(req,res)
+{
+    console.log("NewItem: %j", req.body.newItem);
+    menuService.addMenuItem(collection,req.body.newItem, function(err){
+        if(err)
+        {
+            console.log('*** addMenuItem err');
+            res.json({ 'status': false });
+        }
+        else {
+            console.log('*** addMenuItem ok');
+            res.json({ 'status': true });
+        }
+    });
+});
+
 app.delete('/api/menu/delete/:id', function(req, res) {
     console.log('*** deleteMenuItem');
 
@@ -176,7 +212,7 @@ app.delete('/api/menu/delete/:id', function(req, res) {
             console.log('*** deleteMenuItem ok');
             res.json({ 'status': true });
         }
-    })
+    });
 });
 
 /*exports.addCustomer = function (req, res) {

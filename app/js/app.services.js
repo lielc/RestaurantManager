@@ -34,11 +34,16 @@ angular.module('RestMgrApp')
         };
 
         this.addMenuItem = function (newItem){
-
+            return $http.post(urlBase + '/add',newItem).then(function (status) {
+                return status.data;
+            });
         };
 
-        this.updateMenuItem = function (itemId,newItem){
-
+        this.editMenuItem = function (newItem)
+        {
+            return $http.post(urlBase + '/edit',newItem).then(function (status) {
+                return status.data;
+            });
         };
     }]);
 
