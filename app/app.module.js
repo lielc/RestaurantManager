@@ -31,6 +31,10 @@ RestMgrApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/search',
             templateUrl: 'app/admin/admin.menuedit.search.template.html'
         })
+        .state('admin.menuedit_fun', {
+            url: '/fun',
+            templateUrl: 'app/admin/admin.menuedit.fun.template.html'
+        })
 });
 
 RestMgrApp.constant('Constants', {
