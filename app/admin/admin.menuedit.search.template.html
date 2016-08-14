@@ -1,0 +1,57 @@
+<h3>Search</h3>
+<div class="row" ng-controller="menuEditCtrl" id="menuEditCtrl">
+    <div style="padding:20px 10px 60px 10px">
+
+
+           <span class="col-md-0">
+               <span class="col-md-1" style="font-weight:bold">Name:</span>
+                <input type="text" ng-model="searchName" />
+           </span>
+        <br>
+        <br>
+         <span class="col-md-0">
+               Min:
+               <input type="text" ng-model="searchPriceMin" style="width: 50px" />
+               <span class="col-md-1" style="font-weight:bold">Price:</span>
+               Max:
+               <input type="text" ng-model="searchPriceMax" style="width: 50px" />
+
+           </span>
+        <br>
+        <br>
+          <span class="col-md-0">
+               <span class="col-md-1" style="font-weight:bold">Type:</span>
+               <select ng-model="selectedType" ng-options="name for name in Types">
+                </select>
+           </span>
+    </div>
+    <div ui-view></div>
+
+    <table class="table">
+        <thead>
+            <th>Dish Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th></th>
+        </thead>
+        <tr class="bg-success">
+            <th colspan="5">Menu Items</th>
+        </tr>
+        <tr  ng-repeat="mi in menuItems | filter:{ Type: selectedType,Name: searchName}" ng-if="(1 * mi.Price >= 1 * searchPriceMin) && (1 * mi.Price <= 1 * searchPriceMax)">
+            <td>{{mi.Name}}</td>
+            <td>{{mi.Description}}</td>
+            <td>{{mi.Price}}</td>
+            <td>
+                <button type="button" class="btn btn-default" ui-sref="admin.menuedit_edit">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="deleteMenuItem(mi._id)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

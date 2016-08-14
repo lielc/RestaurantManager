@@ -1,7 +1,12 @@
 angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataService',function ($scope,menuDataService){
     $scope.menuItems = [];
     $scope.newItem = {Name:"name",Description:"description",Price:"price",Type:"drink/desert.."};
-    
+    $scope.Types =["Drink","Desert","Starter","Main","Salad"];
+    $scope.searchName="";
+    $scope.searchPriceMin = 0;
+    $scope.searchPriceMax = 120;
+
+
     getAllMenuItems();
     
     function getAllMenuItems(){

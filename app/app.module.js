@@ -14,7 +14,6 @@ RestMgrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('admin.tableadmin', {
             url: '',
             templateUrl: 'app/admin/admin.tableadmin.template.html'
-
         })
         .state('admin.menuedit_display', {
             url: '/menuedit_display',
@@ -27,6 +26,10 @@ RestMgrApp.config(function($stateProvider, $urlRouterProvider) {
         .state('admin.menuedit_display.add', {
             url: '/add',
             templateUrl: 'app/admin/admin.menuedit.add.template.html'
+        })
+        .state('admin.menuedit_search', {
+            url: '/search',
+            templateUrl: 'app/admin/admin.menuedit.search.template.html'
         })
 });
 
