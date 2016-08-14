@@ -18,8 +18,8 @@
         <tr class="bg-success">
 
             <td>
-                <button onclick="startGame()">Start</button>
-                <button ui-sref="admin.menuedit_fun"  ui-sref-opts="{reload: true, notify: true}">Renew</button>
+                <button class="btn btn-default"  onclick="startGame()">Start</button>
+                <button class="btn btn-default"  ui-sref="admin.menuedit_fun"  ui-sref-opts="{reload: true, notify: true}">Renew</button>
             </td>
 
         </tr>
@@ -34,6 +34,24 @@
             </td>
         </tr>
 
+    </table>
+    <table class="table">
+        <tr>
+            <td>
+                <button type="button" class="btn btn-default" data-ng-click="refreshFeed(newItem)" >Refresh feed</button>
+            </td>
+        </tr>
+    <tr>
+        <td>
+            <article>
+                <section >
+                    <h2 ng-repeat="book in feedData.items">{{book.title}}</h2>
+                </section>
+            </article>
+
+        </td>
+
+    </tr>
     </table>
 
 

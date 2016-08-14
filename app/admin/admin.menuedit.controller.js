@@ -5,6 +5,7 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
     $scope.searchName="";
     $scope.searchPriceMin = 0;
     $scope.searchPriceMax = 120;
+    $scope.feedData = {"books":[{"id":11,"name":"zehava veshloshet ha subim","author":"J. K. Rowling","price":55,"amount":35}]};
 
 
     getAllMenuItems();
@@ -45,8 +46,14 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
         }
     };
 
+    $scope.refreshFeed = function() {
+        menuDataService.getFeed(function(data)
+        {
+            $scope.feedData = data;
+        });
+    };
+
     $scope.addMenuItem = function (newItem) {
-        alert(newItem.Name);
         menuDataService.addMenuItem({
             "newItem": {
                 "Description": newItem.Description,
@@ -55,7 +62,7 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
                 "Type": newItem.Type
             }
         })
-            .then(function () {
+            .then(function (error) {
                 alert('Error adding menuItem: ' + error.message);
             });
     };
