@@ -1,0 +1,38 @@
+.shadowText{
+    text-shadow: 2px 2px #FF0000;
+}
+
+
+.Transition {
+    width: 100px;
+    height: 50px;
+    background: red;
+    -webkit-transition: width 2s; /* Safari */
+    transition: width 2s;
+}
+
+
+.Transition:hover{
+    width: 300px;
+}
+
+.DivideLongTexts{
+    column-count: 3;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url('myfont.woff2') format('woff2');
+}
+
+.NewFont{
+    font-family: myFirstFont;
+}
+
+.RoundedDiv {
+    border: 2px solid #a1a1a1;
+    padding: 10px 40px;
+    background: #dddddd;
+    width: 300px;
+    border-radius: 25px;
+}
