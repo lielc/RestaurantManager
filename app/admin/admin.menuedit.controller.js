@@ -5,10 +5,14 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
     $scope.searchName="";
     $scope.searchPriceMin = 0;
     $scope.searchPriceMax = 120;
-    $scope.feedData = {"books":[{"id":11,"name":"zehava veshloshet ha subim","author":"J. K. Rowling","price":55,"amount":35}]};
+    $scope.feedData;
 
+    /*$scope.getFeed(function (data)
+    {
+        $scope.feedData = data;
+    });*/
     getAllMenuItems();
-    
+
     function getAllMenuItems(){
         menuDataService.getAllMenuItems().then(function(response){
             $scope.menuItems = response.data;
@@ -62,7 +66,7 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
             }
         })
             .then(function (error) {
-                alert('Error adding menuItem: ' + error.message);
+            //    alert('Error adding menuItem: ' + error.message);
             });
     };
 
@@ -86,7 +90,8 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
         var marker = new google.maps.Marker({
             position: myLatLng,
             title : 'Our Resteraunt',
-            map:map
+            map:map,
+            draggable:true
         });
     };
 

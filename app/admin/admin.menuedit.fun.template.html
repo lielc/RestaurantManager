@@ -35,24 +35,25 @@
         </tr>
 
     </table>
+
+
     <table class="table">
+        <tr class="bg-success">
+            <th colspan="5">Feed</th>
+            <th colspan="5">Link</th>
+        </tr>
+        <tr  ng-repeat="item in feedData.items">
+
+            <td>{{item.title}}</td>
+            <td>{{item.link}}</td>
+        </tr>
         <tr>
             <td>
                 <button type="button" class="btn btn-default" data-ng-click="refreshFeed(newItem)" >Refresh feed</button>
             </td>
         </tr>
-    <tr>
-        <td>
-            <article>
-                <section >
-                    <h2 ng-repeat="book in feedData.items">{{book.title}}</h2>
-                </section>
-            </article>
-
-        </td>
-
-    </tr>
     </table>
+
     <table class="table">
         <tr>
             <td>
@@ -62,16 +63,16 @@
                     1800-90-60-90
                 </address>
                 <address>
-                    <strong>Support:</strong>   <a href="mailto:Support@MakeItUp.com">Support@MakeItUp.com</a><br />
-                    <strong>Marketing:</strong> <a href="mailto:Marketing@MakeItUp.com">Marketing@MakeItUp.com</a>
+                    <strong>Support:</strong>   <a href="mailto:Support@Resteraunt.com">Support@Resteraunt.com</a><br />
+                    <strong>Marketing:</strong> <a href="mailto:Marketing@Resteraunt.com">Marketing@Resteraunt.com</a>
                 </address>
             </td>
             <td>
                 <button type="button" class="btn btn-default"  data-ng-click="refreshGoogleMap()">refresh map</button>
             </td>
         </tr>
-        <tr>
-        <td id="googleMap" style="width:500px;height:500px;">
+        <tr style="height:350px;width:350px">
+        <td id="googleMap">
 
         </td>
 
@@ -92,7 +93,6 @@
     </head>
 
     <script>
-
         var myGamePiece;
         var myObstacles = [];
         var myScore;

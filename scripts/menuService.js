@@ -29,7 +29,7 @@ exports.getAllMenuItems = function(collection,response){
 
 exports.deleteMenuItem = function(collection,id,callback){
     console.log('*** accessDB.deleteCustomer');
-    collection.remove({ 'Id': id }, function (err) {
+    collection.remove({ _id: id }, function (err) {
         callback(null);
     });
 };

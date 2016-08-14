@@ -203,8 +203,9 @@ app.post('/api/menu/add', function(req,res)
 
 app.delete('/api/menu/delete/:id', function(req, res) {
     console.log('*** deleteMenuItem');
-
-    menuService.deleteMenuItem(collection, req.params.id,function (err){
+    console.log( req.params.id);
+    var objectId = new ObjectID(req.params.id);
+    menuService.deleteMenuItem(collection, objectId,function (err){
         if (err) {
             console.log('*** deleteMenuItem err');
             res.json({ 'status': false });
