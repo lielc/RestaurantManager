@@ -53,6 +53,31 @@
 
     </tr>
     </table>
+    <table class="table">
+        <tr>
+            <td>
+                <address>
+                    Maskit 6, Herzliya, Israel<br />
+                    <abbr title="Phone">Phone Number:</abbr>
+                    1800-90-60-90
+                </address>
+                <address>
+                    <strong>Support:</strong>   <a href="mailto:Support@MakeItUp.com">Support@MakeItUp.com</a><br />
+                    <strong>Marketing:</strong> <a href="mailto:Marketing@MakeItUp.com">Marketing@MakeItUp.com</a>
+                </address>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default"  data-ng-click="refreshGoogleMap()">refresh map</button>
+            </td>
+        </tr>
+        <tr>
+        <td id="googleMap" style="width:500px;height:500px;">
+
+        </td>
+
+        </tr>
+
+    </table>
 
 
     <head>
@@ -63,6 +88,7 @@
                 background-color: #f1f1f1;
             }
         </style>
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
     </head>
 
     <script>

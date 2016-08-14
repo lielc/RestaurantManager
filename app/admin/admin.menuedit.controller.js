@@ -7,7 +7,6 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
     $scope.searchPriceMax = 120;
     $scope.feedData = {"books":[{"id":11,"name":"zehava veshloshet ha subim","author":"J. K. Rowling","price":55,"amount":35}]};
 
-
     getAllMenuItems();
     
     function getAllMenuItems(){
@@ -65,6 +64,30 @@ angular.module('RestMgrApp').controller('menuEditCtrl', ['$scope','menuDataServi
             .then(function (error) {
                 alert('Error adding menuItem: ' + error.message);
             });
+    };
+
+    $scope.refreshGoogleMap = function()
+    {
+        var myCenter = new google.maps.LatLng(32.166868, 34.811683);
+        var mapProp = {
+            center: new google.maps.LatLng(32.166868, 34.811683),
+            zoom: 15,
+            panControl: false,
+            zoomControl: false,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            overviewMapControl: false,
+            rotateControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        var myLatLng = {lat: 32.166868, lng: 34.811683};
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            title : 'Our Resteraunt',
+            map:map
+        });
     };
 
 }]);
